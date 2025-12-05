@@ -1,0 +1,4 @@
+# MD013/line-length - Line length
+MD013:
+  # Number of characters, basically allowing very long lines
+  line_length: 1000

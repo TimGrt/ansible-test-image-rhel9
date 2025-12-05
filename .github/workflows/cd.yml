@@ -1,0 +1,54 @@
+---
+name: Deployment
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Lint Containerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "Containerfile"
+
+  publish_to_github_packages:
+    name: Publish to Github Container registry
+    runs-on: ubuntu-latest
+    needs: linter
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Containerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

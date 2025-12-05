@@ -1,0 +1,3 @@
+ignored:
+  - DL3006 # Always tag the version of an image explicitly
+  - DL3033 # Specify version for packages

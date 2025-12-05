@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-merge-conflict
+        name: Check for merge conflict markers
+      - id: trailing-whitespace
+        name: Remove trailing whitespaces
+        args: [--markdown-linebreak-ext=md]
+      - id: no-commit-to-branch
+        name: Ensure committing to allowed branch
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.46.0
+    hooks:
+      - id: markdownlint
+        name: Lint Markdown files
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.35.0
+    hooks:
+      - id: check-github-workflows
+        name: Check Github workflows
