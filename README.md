@@ -1,10 +1,10 @@
-# RHEL9 Image for Molecule testing
+# RHEL9 Image for Ansible testing
 
-Container Image, based on UBI8, for testing Ansible content with Molecule.
+Container Image, based on UBI9, for testing Ansible content.
 
 A user `ansible` is created with password-less sudo configured. A couple of default packages are installed, but not all packages as in a *normal* RHEL9 installation. Add additional packages in a `prepare.yml` during Molecule *create* stage.
 
-[![Container Build and Publish](https://github.com/TimGrt/rhel9-molecule-test-image/actions/workflows/cd.yml/badge.svg)](https://github.com/TimGrt/rhel9-molecule-test-image/actions/workflows/cd.yml)
+[![Container Build and Publish](https://github.com/TimGrt/ansible-test-image-rhel9/actions/workflows/cd.yml/badge.svg)](https://github.com/TimGrt/ansible-test-image-rhel9/actions/workflows/cd.yml)
 
 ## How to Build
 
@@ -12,7 +12,7 @@ If you need to build the image on your own locally, do the following:
 
   1. [Install Podman](https://podman.io/docs/installation).
   2. Clone the repository and `cd` into this directory.
-  3. Run `podman build -t rhel9-molecule-test .`
+  3. Run `podman build -t ansible-test-rhel9 .`
 
 ## How to Use with Molecule
 
@@ -29,7 +29,7 @@ driver:
   name: podman
 platforms:
   - name: rhel9-molecule-test
-    image: ghcr.io/timgrt/rhel9-molecule-test-image:main
+    image: ghcr.io/timgrt/ansible-test-image-rhel9:main
     groups:
       - molecule
     volumes:
