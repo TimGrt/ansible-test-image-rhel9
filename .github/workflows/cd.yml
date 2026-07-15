@@ -7,15 +7,18 @@ on:
       - main
     types:
       - closed
+    paths:
+      - 'Containerfile'
 
 jobs:
   linter:
+    name: Lint Containerfile
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - uses: actions/checkout@v2
-
-      - name: Lint Containerfile
+      - name: Run hadolint
         uses: hadolint/hadolint-action@master
         with:
           dockerfile: "Containerfile"
